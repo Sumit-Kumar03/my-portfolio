@@ -3,7 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sumit Kumar — Full-Stack .NET & Angular Developer Portfolio</title>
+    <title>Sumit Kumar | .NET Full-Stack Developer</title>
+    <meta name="description" content="Portfolio of Sumit Kumar, a .NET full-stack developer working with ASP.NET Core, C#, Angular, SQL Server, Azure, AWS, and AI integrations. Explore selected projects, production troubleshooting, and enterprise integrations.">
+    <meta name="theme-color" content="#0d0d0c">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Sumit Kumar | .NET Full-Stack Developer">
+    <meta property="og:description" content="Selected .NET, Angular, cloud, data, and AI integration work by Sumit Kumar.">
+    <meta property="og:url" content="https://my-portfolio.sumitkashyap33820.workers.dev/">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Sumit Kumar | .NET Full-Stack Developer">
+    <meta name="twitter:description" content="Selected .NET, Angular, cloud, data, and AI integration work by Sumit Kumar.">
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Google Fonts: Newsreader (Editorial Serif), Inter (Crisp Sans), JetBrains Mono (Code/Telemetry) -->
@@ -122,7 +131,7 @@
         }
     </style>
 </head>
-<body class="paper-grain antialiased selection:bg-terracotta/25 selection:text-ink">
+<body class="paper-grain antialiased selection:bg-terracotta/25 selection:text-ink">\n    <a class="skip-link" href="#main-content">Skip to main content</a>
 
     <!-- Toast Notification Container -->
     <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2 pointer-events-none"></div>
@@ -159,7 +168,7 @@
                 </button>
                 <button onclick="openResumeModal()" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded bg-terracotta text-paper font-mono text-xs font-semibold hover:bg-terracotta/90 transition-colors">
                     <i class="ph-bold ph-printer"></i>
-                    <span>Resume PDF</span>
+                    <span>View / Print Resume</span>
                 </button>
             </div>
         </div>
@@ -168,7 +177,7 @@
     <!-- ==========================================
          MAIN ARCHITECTURAL GRID CONTAINER
     =========================================== -->
-    <main class="max-w-6xl mx-auto px-4 sm:px-6 border-x border-borderHairline no-print">
+    <main id="main-content" tabindex="-1" class="max-w-6xl mx-auto px-4 sm:px-6 border-x border-borderHairline no-print">
 
         <!-- ==========================================
              HERO SECTION: EDITORIAL INTRO + RFC INDEX
@@ -679,6 +688,7 @@
                         </div>
 
                         <form onsubmit="handleContactSubmit(event)" class="space-y-3 pt-2 border-t border-borderHairline">
+                    <p class="text-xs text-stoneMuted">This opens your default email app; the website does not send or store messages.</p>
                             <div>
                                 <label class="block font-mono text-[10px] text-stoneMuted uppercase mb-1">Your Name *</label>
                                 <input type="text" id="contact-name" required placeholder="Alex Rivera" class="w-full px-3 py-2 bg-paper border border-borderHairline text-xs text-ink focus:outline-none focus:border-terracotta">
@@ -719,7 +729,7 @@
     <!-- ==========================================
          COMMAND PALETTE MODAL (⌘K / Ctrl+K)
     =========================================== -->
-    <div id="cmd-palette" class="fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-xs flex items-start justify-center pt-20 p-4 no-print" onclick="if(event.target === this) closeCommandPalette()">
+    <div id="cmd-palette" role="dialog" aria-modal="true" aria-label="Quick navigation" class="fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-xs flex items-start justify-center pt-20 p-4 no-print" onclick="if(event.target === this) closeCommandPalette()">
         <div class="w-full max-w-lg bg-surface border border-borderHairline shadow-2xl overflow-hidden">
             <div class="p-3 border-b border-borderHairline flex items-center justify-between font-mono text-xs text-stoneMuted">
                 <span>QUICK JUMP MENU</span>
@@ -757,7 +767,7 @@
     <!-- ==========================================
          PRINTABLE / DOWNLOADABLE ATS RESUME MODAL
     =========================================== -->
-    <div id="resume-modal" class="fixed inset-0 z-50 hidden bg-black/85 backdrop-blur-xs overflow-y-auto p-4 sm:p-8">
+    <div id="resume-modal" role="dialog" aria-modal="true" aria-label="Resume preview" class="fixed inset-0 z-50 hidden bg-black/85 backdrop-blur-xs overflow-y-auto p-4 sm:p-8">
         <div class="max-w-4xl mx-auto mb-4 flex flex-wrap items-center justify-between gap-3 bg-surface border border-borderHairline p-4 no-print">
             <div class="font-mono text-xs">
                 <div class="text-ink font-semibold">PRINTABLE RESUME (UPDATED WITH AVIATION ERP &amp; PRODUCTION RCAs)</div>
@@ -889,16 +899,16 @@
                             <div class="font-mono text-xs text-stoneMuted uppercase">How It Works Step-by-Step</div>
                             <ol class="space-y-2.5 text-xs text-stone font-sans">
                                 <li class="p-3 bg-paper border border-borderHairline">
-                                    <strong class="font-mono text-ink">1. Power BI Requests Data:</strong> Whenever a dataset refreshes, Power BI calls our API URL and passes an encrypted token in the query string: <code class="font-mono text-terracotta">/api/PowerBiApi/detailed-work-orders?token=...</code>
+                                    <strong class="font-mono text-ink">1. Power BI Requests Data:</strong> Whenever a dataset refreshes, Power BI calls a protected API endpoint using a short-lived credential. The public case study intentionally omits the production route and credential format.
                                 </li>
                                 <li class="p-3 bg-paper border border-borderHairline">
-                                    <strong class="font-mono text-ink">2. Why It’s [AllowAnonymous]:</strong> Power BI’s background refresh service doesn't have a logged-in user session, so the encrypted token itself acts as the credential.
+                                    <strong class="font-mono text-ink">2. Why the refresh endpoint uses a separate authentication flow:</strong> Power BI refreshes run without an interactive user session, so the endpoint needs a dedicated, tightly scoped authentication and validation flow.
                                 </li>
                                 <li class="p-3 bg-paper border border-borderHairline">
-                                    <strong class="font-mono text-ink">3. Decrypting the Token (AES-256):</strong> <code class="font-mono text-ink">ReportingTokenService</code> decrypts the token using AES-256-CBC to get <code class="font-mono text-ink">{MasterCompanyId}|{ExpiryTimestamp}</code> and checks that the token hasn't expired.
+                                    <strong class="font-mono text-ink">3. Validating the refresh credential:</strong> The backend validates the credential, expiry, and tenant context before allowing the refresh request to continue. Algorithm and token-format details are intentionally not published.
                                 </li>
                                 <li class="p-3 bg-paper border border-borderHairline">
-                                    <strong class="font-mono text-ink">4. Switching to That Company’s Database:</strong> <code class="font-mono text-sage">_tenantProvider.SetTenant(payload.MasterCompanyId, Request.Path)</code> switches the SQL connection string to match that company.
+                                    <strong class="font-mono text-ink">4. Switching to That Company’s Database:</strong> The backend resolves the tenant from validated server-side context and selects the appropriate data source.
                                 </li>
                                 <li class="p-3 bg-paper border border-borderHairline">
                                     <strong class="font-mono text-ink">5. Running the Stored Procedure:</strong> The repository runs <code class="font-mono text-ink">USP_GetPowerBIDetailedWorkOrders</code> and returns clean JSON rows (work order number, part number, airframe station, and status) back to Power BI.
@@ -908,7 +918,7 @@
 
                         <!-- Actual C# Contract & Simple Security Explanation -->
                         <div class="lg:col-span-6 space-y-4">
-                            <div class="font-mono text-xs text-stoneMuted uppercase">The 3-Line Controller Pattern We Use on Every Data Endpoint</div>
+                            <div class="font-mono text-xs text-stoneMuted uppercase">Simplified Request-Validation Pattern (Illustrative)</div>
                             <pre class="p-4 bg-paper border border-borderHairline font-mono text-[11px] text-ink overflow-x-auto leading-relaxed"><code><span class="text-ochre">[AllowAnonymous]</span>
 <span class="text-ochre">[HttpGet("detailed-work-orders")]</span>
 <span class="text-terracotta">public async</span> Task&lt;IActionResult&gt; GetDetailedWorkOrders([FromQuery] <span class="text-terracotta">string</span> token)
@@ -928,7 +938,7 @@
                                     IMPORTANT SECURITY RULE: NEVER PASS COMPANY ID IN THE URL
                                 </div>
                                 <p class="text-xs text-stone leading-relaxed">
-                                    We never accept <code class="font-mono text-ink">masterCompanyId</code> as a normal URL parameter. If we did, anyone could change the number in the URL and see another company’s data. Instead, we always read the company ID from inside the decrypted token.
+                                    Tenant selection must not trust a caller-supplied company ID. The backend validates the request and resolves tenant context before accessing tenant data.
                                 </p>
                             </div>
                         </div>
@@ -966,14 +976,14 @@
 
                         <!-- Simulated Work Order TAT Embedded Dashboard & DevTools Payload -->
                         <div class="lg:col-span-6 space-y-3">
-                            <div class="font-mono text-xs text-stoneMuted uppercase">Dashboard Preview: Work Order Turnaround Time (TAT)</div>
+                            <div class="font-mono text-xs text-stoneMuted uppercase">Illustrative Dashboard Preview — sample metrics, not live production data</div>
                             <div class="bg-paper border border-borderHairline p-4 space-y-4">
                                 <div class="flex items-center justify-between border-b border-borderHairline pb-2">
                                     <div>
                                         <span class="font-mono text-[10px] text-terracotta uppercase">Aviation ERP • MRO Fleet Analytics</span>
                                         <h4 class="font-sans text-sm font-semibold text-ink">Work Order Turnaround Time (TAT)</h4>
                                     </div>
-                                    <span class="font-mono text-[10px] px-2 py-0.5 bg-surface border border-borderHairline text-sage">200 OK • Live Embed</span>
+                                    <span class="font-mono text-[10px] px-2 py-0.5 bg-surface border border-borderHairline text-sage">DEMO • STATIC PREVIEW</span>
                                 </div>
 
                                 <!-- KPI Cards -->
@@ -997,12 +1007,12 @@
 
                                 <!-- Actual embed-config JSON response preview -->
                                 <div class="font-mono text-[11px] bg-surface p-3 border border-borderHairline text-stone overflow-x-auto">
-                                    <div class="text-stoneMuted mb-1">// GET /api/PowerBIReport/WorkOrderTAT/embed-config</div>
+                                    <div class="text-stoneMuted mb-1">// Illustrative response shape — identifiers and secrets omitted</div>
                                     <div>{</div>
-                                    <div class="pl-3"><span class="text-terracotta">"reportId"</span>: <span class="text-sage">"60f7d6ed-373e-4dc0-905c-e8420d6cb98a"</span>,</div>
+                                    <div class="pl-3"><span class="text-terracotta">"reportId"</span>: <span class="text-sage">"[report-id]"</span>,</div>
                                     <div class="pl-3"><span class="text-terracotta">"reportName"</span>: <span class="text-sage">"Work Order TAT Report"</span>,</div>
-                                    <div class="pl-3"><span class="text-terracotta">"embedToken"</span>: <span class="text-ochre">"H4sIAAAAAAAEAB2TTa70ZgBE3-W2jmRYY6S..."</span>,</div>
-                                    <div class="pl-3"><span class="text-terracotta">"tenantId"</span>: <span class="text-sage">"1"</span>, <span class="text-terracotta">"tokenExpiry"</span>: <span class="text-sage">"2026-09-18T11:29:13Z"</span></div>
+                                    <div class="pl-3"><span class="text-terracotta">"embedToken"</span>: <span class="text-ochre">"[short-lived token omitted]"</span>,</div>
+                                    <div class="pl-3"><span class="text-terracotta">"tenantId"</span>: <span class="text-sage">"[tenant-id]"</span>, <span class="text-terracotta">"tokenExpiry"</span>: <span class="text-sage">"[expiry-time]"</span></div>
                                     <div>}</div>
                                 </div>
                             </div>
@@ -1217,11 +1227,19 @@
             if (!canvas) return;
             const ctx = canvas.getContext('2d');
             const rect = canvas.parentElement.getBoundingClientRect();
-            canvas.width = rect.width - 24;
-            canvas.height = rect.height - 24;
+            const cssWidth = Math.max(0, rect.width - 24);
+            const cssHeight = Math.max(0, rect.height - 24);
+            if (!cssWidth || !cssHeight) return;
 
-            const w = canvas.width;
-            const h = canvas.height;
+            const dpr = Math.max(1, window.devicePixelRatio || 1);
+            canvas.style.width = `${cssWidth}px`;
+            canvas.style.height = `${cssHeight}px`;
+            canvas.width = Math.round(cssWidth * dpr);
+            canvas.height = Math.round(cssHeight * dpr);
+            ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+            const w = cssWidth;
+            const h = cssHeight;
             ctx.clearRect(0, 0, w, h);
 
             // Hairline grid
@@ -1385,14 +1403,26 @@
             setTimeout(() => el.remove(), 2800);
         }
 
-        function copyToClipboard(text, label) {
-            const t = document.createElement('textarea');
-            t.value = text;
-            document.body.appendChild(t);
-            t.select();
-            document.execCommand('copy');
-            document.body.removeChild(t);
-            showToast(`${label} copied: ${text}`);
+        async function copyToClipboard(text, label) {
+            try {
+                if (navigator.clipboard && window.isSecureContext) {
+                    await navigator.clipboard.writeText(text);
+                } else {
+                    const t = document.createElement('textarea');
+                    t.value = text;
+                    t.setAttribute('readonly', '');
+                    t.style.position = 'fixed';
+                    t.style.opacity = '0';
+                    document.body.appendChild(t);
+                    t.select();
+                    const copied = document.execCommand('copy');
+                    document.body.removeChild(t);
+                    if (!copied) throw new Error('Clipboard copy was not permitted');
+                }
+                showToast(`${label} copied to clipboard`);
+            } catch (error) {
+                showToast(`Could not copy ${label}. Please copy it manually.`);
+            }
         }
 
         function openResumeModal() {
@@ -1430,12 +1460,17 @@
             e.target.reset();
         }
 
-        window.onload = function () {
+        window.addEventListener('DOMContentLoaded', function () {
             switchPasTab('flowA');
             renderRcaTelemetry();
             switchIntBlueprint('boomi');
-            window.addEventListener('resize', drawTelemetryCanvas);
-        };
+
+            let resizeTimer;
+            window.addEventListener('resize', () => {
+                window.clearTimeout(resizeTimer);
+                resizeTimer = window.setTimeout(drawTelemetryCanvas, 120);
+            }, { passive: true });
+        });
     </script>
 </body>
 </html>
