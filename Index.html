@@ -1,0 +1,1441 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sumit Kumar — Full-Stack .NET & Angular Developer Portfolio</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Newsreader (Editorial Serif), Inter (Crisp Sans), JetBrains Mono (Code/Telemetry) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;1,400&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet">
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        serif: ['"Newsreader"', 'Georgia', 'serif'],
+                        sans: ['"Inter"', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+                        mono: ['"JetBrains Mono"', 'monospace'],
+                    },
+                    colors: {
+                        paper: '#0d0d0c',
+                        surface: '#141413',
+                        surfaceHover: '#1c1c1a',
+                        borderHairline: '#262522',
+                        ink: '#e8e6df',
+                        stone: '#9c988e',
+                        stoneMuted: '#6e6a61',
+                        terracotta: '#d97757',
+                        sage: '#5b8c5a',
+                        crimson: '#c94a4a',
+                        ochre: '#d4a359'
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        :root {
+            color-scheme: dark;
+        }
+        body {
+            background-color: #0d0d0c;
+            color: #e8e6df;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* Subtle Tactile Paper Noise Overlay */
+        .paper-grain {
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.028'/%3E%3C/svg%3E");
+        }
+
+        /* Exposed Architectural Grid Borders & Crosshairs */
+        .blueprint-border {
+            border-color: #262522;
+        }
+        .crosshair-corner {
+            position: relative;
+        }
+        .crosshair-corner::before {
+            content: "+";
+            position: absolute;
+            top: -9px;
+            left: -5px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            color: #6e6a61;
+            pointer-events: none;
+            line-height: 1;
+        }
+
+        /* Editorial Margin Note Styling */
+        .field-note {
+            border-left: 2px solid #d97757;
+            background: rgba(217, 119, 87, 0.05);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0d0d0c;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #262522;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #d97757;
+        }
+
+        /* Print Stylesheet for 1-Page ATS Resume */
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            #printable-resume-container,
+            #printable-resume-container * {
+                visibility: visible;
+            }
+            #printable-resume-container {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                background: #ffffff !important;
+                color: #000000 !important;
+                padding: 0 !important;
+                margin: 0 !important;
+                box-shadow: none !important;
+            }
+            .no-print {
+                display: none !important;
+            }
+        }
+    </style>
+</head>
+<body class="paper-grain antialiased selection:bg-terracotta/25 selection:text-ink">
+
+    <!-- Toast Notification Container -->
+    <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2 pointer-events-none"></div>
+
+    <!-- ==========================================
+         TOP EDITORIAL MASTHEAD & NAVIGATION
+    =========================================== -->
+    <header class="sticky top-0 z-40 bg-paper/90 backdrop-blur-md border-b border-borderHairline no-print">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between">
+            <!-- Left Identity -->
+            <a href="#" class="flex items-center gap-3 group">
+                <span class="w-2 h-2 rounded-full bg-sage"></span>
+                <div class="font-mono text-xs tracking-tight">
+                    <span class="text-ink font-semibold group-hover:text-terracotta transition-colors">sumit.kumar</span>
+                    <span class="text-stoneMuted hidden sm:inline"> // .net &amp; angular developer</span>
+                </div>
+            </a>
+
+            <!-- Center/Right Navigation -->
+            <nav class="hidden lg:flex items-center gap-6 font-mono text-xs text-stone">
+                <a href="#aviation-erp" class="hover:text-ink transition-colors"><span class="text-terracotta">01.</span> Aviation ERP</a>
+                <a href="#projects" class="hover:text-ink transition-colors"><span class="text-terracotta">02.</span> Projects</a>
+                <a href="#rca-war-room" class="hover:text-ink transition-colors"><span class="text-terracotta">03.</span> Production Fixes (RCA)</a>
+                <a href="#integrations" class="hover:text-ink transition-colors"><span class="text-terracotta">04.</span> Integrations</a>
+                <a href="#experience" class="hover:text-ink transition-colors"><span class="text-terracotta">05.</span> Experience</a>
+            </nav>
+
+            <!-- Action Controls -->
+            <div class="flex items-center gap-2">
+                <button onclick="openCommandPalette()" class="inline-flex items-center gap-2 px-2.5 py-1.5 rounded bg-surface border border-borderHairline hover:border-stoneMuted text-xs font-mono text-stone hover:text-ink transition-colors" title="Quick Jump (Ctrl+K / Cmd+K)">
+                    <i class="ph ph-magnifying-glass text-xs"></i>
+                    <span class="hidden sm:inline">Jump</span>
+                    <kbd class="px-1.5 py-0.5 text-[10px] bg-paper border border-borderHairline rounded text-stoneMuted">⌘K</kbd>
+                </button>
+                <button onclick="openResumeModal()" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded bg-terracotta text-paper font-mono text-xs font-semibold hover:bg-terracotta/90 transition-colors">
+                    <i class="ph-bold ph-printer"></i>
+                    <span>Resume PDF</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- ==========================================
+         MAIN ARCHITECTURAL GRID CONTAINER
+    =========================================== -->
+    <main class="max-w-6xl mx-auto px-4 sm:px-6 border-x border-borderHairline no-print">
+
+        <!-- ==========================================
+             HERO SECTION: EDITORIAL INTRO + RFC INDEX
+        =========================================== -->
+        <section class="py-12 sm:py-16 border-b border-borderHairline">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+                <!-- Left 7 Cols: Candid Human Editorial Intro -->
+                <div class="lg:col-span-7 space-y-6">
+                    <div class="inline-flex items-center gap-2 font-mono text-xs text-stone">
+                        <span class="text-terracotta uppercase tracking-widest">Kanpur, India</span>
+                        <span>•</span>
+                        <span>4 Years Full-Stack Experience (.NET Core + Angular)</span>
+                    </div>
+
+                    <h1 class="font-serif text-3xl sm:text-5xl text-ink font-normal leading-[1.15] tracking-tight">
+                        Hi, I’m Sumit. I build fast, reliable <span class="italic text-terracotta">.NET &amp; Angular</span> business apps, fix production bottlenecks, and connect cloud services.
+                    </h1>
+
+                    <p class="text-stone text-sm sm:text-base leading-relaxed">
+                        Over the last 4 years at <strong class="text-ink font-medium">SilverXis LLP</strong> and <strong class="text-ink font-medium">Iotasol Technologies</strong>, I’ve worked across the full stack—from building multi-tenant Power BI dashboards for an <strong class="text-ink font-medium">Aviation ERP</strong> and AI risk tools for a <strong class="text-ink font-medium">GRC platform</strong>, to checking S3 logs and CloudWatch graphs to stop server crashes and database spikes.
+                    </p>
+
+                    <!-- Tactile Metadata Strip -->
+                    <div class="grid grid-cols-2 sm:grid-cols-4 border border-borderHairline bg-surface divide-y sm:divide-y-0 sm:divide-x divide-borderHairline font-mono text-xs">
+                        <div class="p-3">
+                            <div class="text-stoneMuted text-[10px] uppercase">Core Stack</div>
+                            <div class="text-ink font-medium mt-0.5">.NET Core &amp; Angular</div>
+                        </div>
+                        <div class="p-3">
+                            <div class="text-stoneMuted text-[10px] uppercase">Cloud &amp; Data</div>
+                            <div class="text-ink font-medium mt-0.5">AWS / Azure / SQL</div>
+                        </div>
+                        <div class="p-3">
+                            <div class="text-stoneMuted text-[10px] uppercase">Award</div>
+                            <div class="text-terracotta font-medium mt-0.5">Emp. of Year '25</div>
+                        </div>
+                        <div class="p-3">
+                            <div class="text-stoneMuted text-[10px] uppercase">Query Speed</div>
+                            <div class="text-sage font-medium mt-0.5">30% Faster SQL/EF</div>
+                        </div>
+                    </div>
+
+                    <!-- Direct Contact Strip (Strictly LinkedIn, Email, Phone) -->
+                    <div class="pt-2 flex flex-wrap items-center gap-3 font-mono text-xs">
+                        <a href="https://www.linkedin.com/in/sumit-kumar-892824216/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-3 py-2 rounded bg-surface border border-borderHairline hover:border-terracotta text-ink transition-colors">
+                            <i class="ph-fill ph-linkedin-logo text-terracotta"></i>
+                            <span>linkedin.com/in/sumit-kumar</span>
+                            <i class="ph ph-arrow-up-right text-stoneMuted"></i>
+                        </a>
+                        <button onclick="copyToClipboard('sumitkashyap33820@gmail.com', 'Email')" class="inline-flex items-center gap-2 px-3 py-2 rounded bg-surface border border-borderHairline hover:border-terracotta text-ink transition-colors">
+                            <i class="ph ph-envelope-simple text-terracotta"></i>
+                            <span>sumitkashyap33820@gmail.com</span>
+                            <i class="ph ph-copy text-stoneMuted"></i>
+                        </button>
+                        <button onclick="copyToClipboard('+91-6387913834', 'Phone')" class="inline-flex items-center gap-2 px-3 py-2 rounded bg-surface border border-borderHairline hover:border-terracotta text-ink transition-colors">
+                            <i class="ph ph-phone text-sage"></i>
+                            <span>+91-6387913834</span>
+                            <i class="ph ph-copy text-stoneMuted"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Right 5 Cols: Interactive Engineering Directory / Quick Summary -->
+                <div class="lg:col-span-5">
+                    <div class="bg-surface border border-borderHairline rounded-sm overflow-hidden">
+                        <div class="px-4 py-3 border-b border-borderHairline flex items-center justify-between bg-paper/60 font-mono text-xs">
+                            <span class="text-ink font-medium">QUICK HIGHLIGHTS // CLICK TO EXPLORE</span>
+                            <span class="text-stoneMuted">4 YRS EXP</span>
+                        </div>
+                        <div class="divide-y divide-borderHairline font-mono text-xs">
+                            <a href="#aviation-erp" class="block p-3.5 hover:bg-surfaceHover transition-colors group">
+                                <div class="flex items-center justify-between text-stoneMuted mb-1">
+                                    <span>01 • SILVERXIS LLP</span>
+                                    <span class="text-terracotta group-hover:translate-x-0.5 transition-transform">→</span>
+                                </div>
+                                <div class="text-ink font-sans font-medium text-sm">Aviation ERP &amp; Multi-Tenant Power BI Dashboards</div>
+                                <div class="text-stone font-sans text-xs mt-0.5">How we gave every company its own live dashboard with encrypted data tokens and Angular embedding.</div>
+                            </a>
+
+                            <a href="#projects" class="block p-3.5 hover:bg-surfaceHover transition-colors group">
+                                <div class="flex items-center justify-between text-stoneMuted mb-1">
+                                    <span>02 • KEY PROJECTS</span>
+                                    <span class="text-terracotta group-hover:translate-x-0.5 transition-transform">→</span>
+                                </div>
+                                <div class="text-ink font-sans font-medium text-sm">Aviation ERP, SecurityOS (GRC) &amp; AI Medical Reports</div>
+                                <div class="text-stone font-sans text-xs mt-0.5">Full-stack apps using .NET Core, Angular, Python, FastAPI, LangChain, OCR, and Azure AI.</div>
+                            </a>
+
+                            <a href="#rca-war-room" onclick="selectRca(1)" class="block p-3.5 hover:bg-surfaceHover transition-colors group">
+                                <div class="flex items-center justify-between text-stoneMuted mb-1">
+                                    <span class="text-crimson">03 • PRODUCTION RCA #1</span>
+                                    <span class="text-terracotta group-hover:translate-x-0.5 transition-transform">→</span>
+                                </div>
+                                <div class="text-ink font-sans font-medium text-sm">Fixing an Admin N+1 Query That Reset Our EC2 Server</div>
+                                <div class="text-stone font-sans text-xs mt-0.5">Checked S3 logs, reproduced the spike in VS Profiler, and loaded only required columns.</div>
+                            </a>
+
+                            <a href="#rca-war-room" onclick="selectRca(2)" class="block p-3.5 hover:bg-surfaceHover transition-colors group">
+                                <div class="flex items-center justify-between text-stoneMuted mb-1">
+                                    <span class="text-ochre">04 • PRODUCTION RCA #2</span>
+                                    <span class="text-terracotta group-hover:translate-x-0.5 transition-transform">→</span>
+                                </div>
+                                <div class="text-ink font-sans font-medium text-sm">Stopping RDS Database Spikes with AWS SQS</div>
+                                <div class="text-stone font-sans text-xs mt-0.5">Queued thousands of SendGrid email webhooks in SQS and processed them one-by-one.</div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==========================================
+             01. FEATURED DEEP DIVE: AVIATION ERP & POWER BI
+        =========================================== -->
+        <section id="aviation-erp" class="py-14 border-b border-borderHairline crosshair-corner scroll-mt-14">
+            <!-- Section Header -->
+            <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-4 pb-8 border-b border-borderHairline">
+                <div>
+                    <div class="font-mono text-xs text-terracotta uppercase tracking-widest mb-2">
+                        01 // Featured Architecture • SilverXis LLP
+                    </div>
+                    <h2 class="font-serif text-3xl sm:text-4xl text-ink font-normal">
+                        Aviation ERP: Multi-Tenant Power BI Integration
+                    </h2>
+                </div>
+                <div class="flex flex-wrap gap-1.5 font-mono text-[11px] text-stone">
+                    <span class="px-2 py-1 bg-surface border border-borderHairline rounded">erp_web (Angular)</span>
+                    <span class="px-2 py-1 bg-surface border border-borderHairline rounded">erp_api (.NET Core)</span>
+                    <span class="px-2 py-1 bg-surface border border-borderHairline rounded">ERP_DB (SQL SSDT)</span>
+                </div>
+            </div>
+
+            <!-- Simple, Friendly Overview Note -->
+            <div class="my-6 p-4 sm:p-5 field-note rounded-r">
+                <div class="font-mono text-xs text-terracotta font-semibold mb-1">
+                    // THE GOAL — WHAT WE NEEDED TO SOLVE
+                </div>
+                <p class="text-stone text-xs sm:text-sm leading-relaxed">
+                    "In our <strong class="text-ink">Aviation ERP</strong> system, each aviation company (tenant) needed to see their own live <strong class="text-ink">Work Order Turnaround Time (TAT)</strong> dashboards right inside our Angular app—without needing a Microsoft login and with 100% separation between companies. I built this using <strong class="text-ink">two separate flows</strong> that share one database mapping table (<code class="font-mono text-ink">dbo.PowerBiReportMapping</code>): one flow for Power BI to pull company data safely, and a second flow for our Angular app to display the report."
+                </p>
+            </div>
+
+            <!-- Interactive Aviation ERP Explorer Tabs -->
+            <div class="flex flex-wrap gap-2 border-b border-borderHairline pb-4 mb-6 font-mono text-xs">
+                <button onclick="switchPasTab('flowA')" id="pas-tab-flowA" class="px-3.5 py-2 rounded bg-terracotta text-paper font-semibold transition-colors">
+                    1. How Power BI Gets Data (Flow A)
+                </button>
+                <button onclick="switchPasTab('flowB')" id="pas-tab-flowB" class="px-3.5 py-2 rounded bg-surface border border-borderHairline text-stone hover:text-ink transition-colors">
+                    2. How Users View Reports in Angular (Flow B)
+                </button>
+                <button onclick="switchPasTab('isolation')" id="pas-tab-isolation" class="px-3.5 py-2 rounded bg-surface border border-borderHairline text-stone hover:text-ink transition-colors">
+                    3. Separate Workspaces &amp; Easy Updates
+                </button>
+                <button onclick="switchPasTab('gotchas')" id="pas-tab-gotchas" class="px-3.5 py-2 rounded bg-surface border border-borderHairline text-stone hover:text-ink transition-colors">
+                    4. Real-World Lessons Learned
+                </button>
+            </div>
+
+            <!-- Dynamic Aviation ERP Viewport -->
+            <div id="pas-viewport" class="bg-surface border border-borderHairline p-5 sm:p-7 rounded-sm">
+                <!-- Populated via JS -->
+            </div>
+        </section>
+
+        <!-- ==========================================
+             02. PROJECTS (ALL 3 FLAGSHIP PROJECTS)
+        =========================================== -->
+        <section id="projects" class="py-14 border-b border-borderHairline crosshair-corner scroll-mt-14">
+            <div class="pb-8 border-b border-borderHairline flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+                <div>
+                    <div class="font-mono text-xs text-terracotta uppercase tracking-widest mb-2">
+                        02 // Key Projects
+                    </div>
+                    <h2 class="font-serif text-3xl sm:text-4xl text-ink font-normal">
+                        What I’ve Built Across Domains
+                    </h2>
+                </div>
+                <p class="text-stone text-xs sm:text-sm max-w-md">
+                    Hands-on work across Aviation ERP, Cyber Risk &amp; Compliance (GRC), and Healthcare AI.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 divide-y lg:divide-y-0 lg:divide-x divide-borderHairline border-b border-borderHairline">
+                <!-- Project 1: Aviation ERP -->
+                <article class="p-6 sm:p-7 flex flex-col justify-between bg-paper hover:bg-surface/60 transition-colors">
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between font-mono text-xs">
+                            <span class="text-terracotta">01 / AVIATION ERP</span>
+                            <span class="text-stoneMuted">SilverXis LLP</span>
+                        </div>
+                        <h3 class="font-serif text-2xl text-ink">
+                            Aviation ERP — MRO &amp; Fleet Analytics
+                        </h3>
+                        <p class="text-stone text-xs sm:text-sm leading-relaxed">
+                            An enterprise ERP platform used by aviation companies to manage aircraft repair work orders, airframe stations, spare parts, and turnaround times (TAT).
+                        </p>
+                        <ul class="space-y-2 text-xs text-stone pt-2">
+                            <li class="flex gap-2">
+                                <span class="text-terracotta font-mono">→</span>
+                                <span>Built the end-to-end <strong class="text-ink">multi-tenant Power BI integration</strong> so each company gets its own isolated workspace, encrypted data feed, and embedded Angular dashboards.</span>
+                            </li>
+                            <li class="flex gap-2">
+                                <span class="text-terracotta font-mono">→</span>
+                                <span>Optimized slow Entity Framework Core/LINQ queries and SQL Server stored procedures, making data loading <strong class="text-sage">30% faster</strong>.</span>
+                            </li>
+                            <li class="flex gap-2">
+                                <span class="text-terracotta font-mono">→</span>
+                                <span>Added a one-click template sync feature so any visual update to the Master Report automatically updates all customer reports.</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="pt-6 mt-6 border-t border-borderHairline flex flex-wrap gap-1.5 font-mono text-[11px] text-stoneMuted">
+                        <span>ASP.NET Core</span><span>•</span><span>Angular</span><span>•</span><span>EF Core 9</span><span>•</span><span>SQL Server (SSDT)</span><span>•</span><span>Power BI JS SDK</span>
+                    </div>
+                </article>
+
+                <!-- Project 2: SecurityOS GRC -->
+                <article class="p-6 sm:p-7 flex flex-col justify-between bg-paper hover:bg-surface/60 transition-colors">
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between font-mono text-xs">
+                            <span class="text-terracotta">02 / CYBER GRC PLATFORM</span>
+                            <span class="text-stoneMuted">Iotasol Technologies</span>
+                        </div>
+                        <h3 class="font-serif text-2xl text-ink">
+                            SecurityOS — Governance, Risk &amp; Compliance
+                        </h3>
+                        <p class="text-stone text-xs sm:text-sm leading-relaxed">
+                            A full GRC platform that helps companies manage security audits, track compliance tasks in one place, train employees, and predict business risks using AI.
+                        </p>
+                        <ul class="space-y-2 text-xs text-stone pt-2">
+                            <li class="flex gap-2">
+                                <span class="text-terracotta font-mono">→</span>
+                                <span><strong class="text-ink">AI Risk Prediction:</strong> Used <strong class="text-ink">Microsoft Foundry (Azure AI)</strong> to map custom business risks against standard security controls automatically.</span>
+                            </li>
+                            <li class="flex gap-2">
+                                <span class="text-terracotta font-mono">→</span>
+                                <span><strong class="text-ink">Core Modules Built Independently:</strong> Built data calculation engines, employee training &amp; learning modules, bulk email services, and HTML-to-Adobe PDF report exports.</span>
+                            </li>
+                            <li class="flex gap-2">
+                                <span class="text-terracotta font-mono">→</span>
+                                <span><strong class="text-ink">Boomi &amp; SQS:</strong> Connected external tools (like Microsoft Defender and ClickUp) through Boomi behind an AWS API endpoint, and handled bulk email webhooks with AWS SQS.</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="pt-6 mt-6 border-t border-borderHairline flex flex-wrap gap-1.5 font-mono text-[11px] text-stoneMuted">
+                        <span>ASP.NET Core</span><span>•</span><span>Angular</span><span>•</span><span>Aurora RDS</span><span>•</span><span>AWS SQS</span><span>•</span><span>Microsoft Foundry</span><span>•</span><span>Boomi</span>
+                    </div>
+                </article>
+
+                <!-- Project 3: AI Medical Report Generator -->
+                <article class="p-6 sm:p-7 flex flex-col justify-between bg-paper hover:bg-surface/60 transition-colors">
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between font-mono text-xs">
+                            <span class="text-terracotta">03 / HEALTHCARE AI</span>
+                            <span class="text-stoneMuted">Python + .NET Hybrid</span>
+                        </div>
+                        <h3 class="font-serif text-2xl text-ink">
+                            AI Medical Report Generator
+                        </h3>
+                        <p class="text-stone text-xs sm:text-sm leading-relaxed">
+                            An AI service that turns doctor-patient conversation transcripts and scanned documents into clean, structured medical reports.
+                        </p>
+                        <ul class="space-y-2 text-xs text-stone pt-2">
+                            <li class="flex gap-2">
+                                <span class="text-terracotta font-mono">→</span>
+                                <span><strong class="text-ink">LangChain &amp; OCR Service:</strong> Built a <strong class="text-ink">Python &amp; FastAPI</strong> service using OCR and LangChain to read transcripts and generate structured clinical notes.</span>
+                            </li>
+                            <li class="flex gap-2">
+                                <span class="text-terracotta font-mono">→</span>
+                                <span><strong class="text-ink">Connected to .NET &amp; Angular:</strong> Linked the Python AI service to our main ASP.NET Core and Angular application through REST APIs.</span>
+                            </li>
+                            <li class="flex gap-2">
+                                <span class="text-terracotta font-mono">→</span>
+                                <span><strong class="text-ink">Report History &amp; Audits:</strong> Saved all generated medical reports and edit history safely in SQL Server.</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="pt-6 mt-6 border-t border-borderHairline flex flex-wrap gap-1.5 font-mono text-[11px] text-stoneMuted">
+                        <span>Python</span><span>•</span><span>FastAPI</span><span>•</span><span>LangChain</span><span>•</span><span>OCR</span><span>•</span><span>ASP.NET Core</span><span>•</span><span>Angular</span><span>•</span><span>SQL Server</span>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <!-- ==========================================
+             03. PRODUCTION FIREFIGHTING (RCA) & CLOUDWATCH MONITORING
+        =========================================== -->
+        <section id="rca-war-room" class="py-14 border-b border-borderHairline crosshair-corner scroll-mt-14">
+            <div class="pb-8 border-b border-borderHairline flex flex-col lg:flex-row lg:items-end justify-between gap-4">
+                <div>
+                    <div class="font-mono text-xs text-terracotta uppercase tracking-widest mb-2">
+                        03 // Root Cause Analysis (RCA) &amp; CloudWatch Monitoring
+                    </div>
+                    <h2 class="font-serif text-3xl sm:text-4xl text-ink font-normal">
+                        Real Production Issues I’ve Investigated &amp; Fixed
+                    </h2>
+                </div>
+                <p class="text-stone text-xs sm:text-sm max-w-md">
+                    How I used <strong class="text-ink font-normal">AWS S3 logs, the Visual Studio Profiler, and CloudWatch RDS graphs</strong> to find and fix server bottlenecks.
+                </p>
+            </div>
+
+            <div class="mt-8 grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                <!-- Left 5 Cols: Incident Post-Mortem Selector -->
+                <div class="lg:col-span-5 space-y-4">
+                    <button id="rca-card-1" onclick="selectRca(1)" class="w-full text-left p-5 rounded-sm bg-surface border-2 border-terracotta transition-all space-y-2">
+                        <div class="flex items-center justify-between font-mono text-[11px]">
+                            <span class="text-crimson font-semibold">INCIDENT #01 • EC2 SERVER RESET</span>
+                            <span class="text-terracotta">Selected →</span>
+                        </div>
+                        <h3 class="font-serif text-xl text-ink">
+                            Fixing an Admin Action That Kept Resetting Our EC2 Server
+                        </h3>
+                        <p class="text-xs text-stone leading-relaxed">
+                            An N+1 query inside an admin API was eating up all CPU and memory. I found the exact API using <strong class="text-ink">S3 logs</strong>, reproduced the spike locally with <strong class="text-ink">VS Profiler</strong>, and fixed it by loading only the needed columns.
+                        </p>
+                    </button>
+
+                    <button id="rca-card-2" onclick="selectRca(2)" class="w-full text-left p-5 rounded-sm bg-paper border border-borderHairline hover:bg-surface transition-all space-y-2">
+                        <div class="flex items-center justify-between font-mono text-[11px]">
+                            <span class="text-ochre font-semibold">INCIDENT #02 • AURORA RDS &amp; AWS SQS</span>
+                            <span class="text-stoneMuted">Click to View →</span>
+                        </div>
+                        <h3 class="font-serif text-xl text-ink">
+                            Handling Thousands of SendGrid Email Callbacks Without Spiking RDS
+                        </h3>
+                        <p class="text-xs text-stone leading-relaxed">
+                            When sending thousands of emails, SendGrid hit our webhook all at once with <code class="font-mono text-ink">delivered</code> and <code class="font-mono text-ink">opened</code> events. I added <strong class="text-ink">AWS SQS + a .NET BackgroundService</strong> to process them smoothly one by one.
+                        </p>
+                    </button>
+
+                    <!-- Daily CloudWatch Routine Note -->
+                    <div class="p-4 bg-surface/60 border border-borderHairline text-xs space-y-1.5">
+                        <div class="font-mono text-[11px] text-ink uppercase">How We Monitored RDS Health Every Day</div>
+                        <p class="text-stone leading-relaxed">
+                            Since our backend used a lot of LINQ queries, checking <strong class="text-ink">AWS CloudWatch graphs for Amazon Aurora (RDS)</strong> was part of our daily routine. Whenever we saw a spike in CPU or memory, we checked which queries were running at that exact time, reproduced them on our local machine, and rewrote the LINQ query or offloaded heavy work to SQS.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Right 7 Cols: Interactive Telemetry Graph & Forensic Writeup -->
+                <div class="lg:col-span-7 bg-surface border border-borderHairline rounded-sm overflow-hidden">
+                    <!-- Top Telemetry Header -->
+                    <div class="p-4 sm:p-5 bg-paper border-b border-borderHairline flex flex-wrap items-center justify-between gap-3">
+                        <div>
+                            <div id="rca-header-tag" class="font-mono text-[11px] text-terracotta uppercase">
+                                CLOUDWATCH MONITOR // EC2 &amp; S3 LOG INVESTIGATION
+                            </div>
+                            <h4 id="rca-header-title" class="font-mono text-xs sm:text-sm text-ink font-semibold mt-0.5">
+                                Admin N+1 Query Spike vs. Selective Column Loading Fix
+                            </h4>
+                        </div>
+
+                        <!-- Before / After Toggle -->
+                        <div class="inline-flex rounded bg-surface border border-borderHairline p-0.5 font-mono text-xs">
+                            <button id="btn-mode-before" onclick="setRcaMode('before')" class="px-3 py-1 rounded-sm bg-crimson/20 text-crimson border border-crimson/40 font-medium transition-colors">
+                                Before Fix (Spike)
+                            </button>
+                            <button id="btn-mode-after" onclick="setRcaMode('after')" class="px-3 py-1 rounded-sm text-stone hover:text-ink transition-colors">
+                                After Fix (Stable)
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="p-5 sm:p-6 space-y-6">
+                        <!-- Readout Strip -->
+                        <div class="grid grid-cols-3 gap-3 font-mono">
+                            <div class="p-3 bg-paper border border-borderHairline">
+                                <div class="text-[10px] text-stoneMuted">PEAK CPU USAGE</div>
+                                <div id="rca-metric-cpu" class="text-base sm:text-xl font-semibold text-crimson mt-0.5">99.4% (Crash)</div>
+                            </div>
+                            <div class="p-3 bg-paper border border-borderHairline">
+                                <div class="text-[10px] text-stoneMuted">MEMORY / DB LOAD</div>
+                                <div id="rca-metric-mem" class="text-base sm:text-xl font-semibold text-crimson mt-0.5">Out of Memory</div>
+                            </div>
+                            <div class="p-3 bg-paper border border-borderHairline">
+                                <div class="text-[10px] text-stoneMuted">SERVER STATUS</div>
+                                <div id="rca-metric-lat" class="text-base sm:text-xl font-semibold text-ochre mt-0.5">EC2 Resetting</div>
+                            </div>
+                        </div>
+
+                        <!-- Canvas Telemetry Plot -->
+                        <div class="h-44 sm:h-52 w-full bg-paper border border-borderHairline p-3 relative">
+                            <canvas id="telemetryCanvas" class="w-full h-full block"></canvas>
+                        </div>
+
+                        <!-- Detailed Narrative Writeup -->
+                        <div id="rca-narrative-box" class="space-y-4 pt-2 border-t border-borderHairline text-xs sm:text-sm">
+                            <!-- Injected via JS -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==========================================
+             04. THIRD-PARTY INTEGRATIONS
+        =========================================== -->
+        <section id="integrations" class="py-14 border-b border-borderHairline crosshair-corner scroll-mt-14">
+            <div class="pb-8 border-b border-borderHairline flex flex-col lg:flex-row lg:items-end justify-between gap-4">
+                <div>
+                    <div class="font-mono text-xs text-terracotta uppercase tracking-widest mb-2">
+                        04 // Third-Party Integrations
+                    </div>
+                    <h2 class="font-serif text-3xl sm:text-4xl text-ink font-normal">
+                        Connecting External Tools &amp; Single Sign-On
+                    </h2>
+                </div>
+                <div class="flex flex-wrap gap-2 font-mono text-xs">
+                    <button onclick="switchIntBlueprint('boomi')" id="int-btn-boomi" class="px-3 py-1.5 rounded bg-terracotta text-paper font-semibold">
+                        1. Boomi + AWS API Endpoint
+                    </button>
+                    <button onclick="switchIntBlueprint('graph')" id="int-btn-graph" class="px-3 py-1.5 rounded bg-surface border border-borderHairline text-stone hover:text-ink">
+                        2. MS Graph &amp; SecurityScorecard
+                    </button>
+                    <button onclick="switchIntBlueprint('sso')" id="int-btn-sso" class="px-3 py-1.5 rounded bg-surface border border-borderHairline text-stone hover:text-ink">
+                        3. Azure AD &amp; Okta SSO
+                    </button>
+                </div>
+            </div>
+
+            <div id="int-blueprint-body" class="mt-6 bg-surface border border-borderHairline p-6 sm:p-8 rounded-sm">
+                <!-- Populated via JS -->
+            </div>
+        </section>
+
+        <!-- ==========================================
+             05. WORK EXPERIENCE, AWARDS & CONTACT
+        =========================================== -->
+        <section id="experience" class="py-14 scroll-mt-14">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
+                <!-- Left 7 Cols: Experience & Awards -->
+                <div class="lg:col-span-7 space-y-8">
+                    <div>
+                        <div class="font-mono text-xs text-terracotta uppercase tracking-widest mb-2">
+                            05 // Work Experience &amp; Education
+                        </div>
+                        <h2 class="font-serif text-3xl text-ink font-normal">
+                            Career Timeline
+                        </h2>
+                    </div>
+
+                    <div class="space-y-8 border-l border-borderHairline pl-6">
+                        <!-- SilverXis -->
+                        <div class="relative space-y-2">
+                            <span class="w-2.5 h-2.5 rounded-full bg-terracotta absolute -left-[29px] top-1.5 ring-4 ring-paper"></span>
+                            <div class="flex flex-wrap items-center justify-between font-mono text-xs text-stoneMuted">
+                                <span class="text-terracotta font-semibold">MAY 2026 – OCT 2026</span>
+                                <span>Ahmedabad, Gujarat</span>
+                            </div>
+                            <h3 class="font-serif text-xl text-ink">Senior Software Engineer (Full Stack) — SilverXis LLP</h3>
+                            <p class="text-xs sm:text-sm text-stone leading-relaxed">
+                                Built and improved full-stack features for our <strong class="text-ink">Aviation ERP</strong> platform using ASP.NET Core, Angular, and SQL Server. Designed the multi-tenant <strong class="text-ink">Power BI App-Owns-Data</strong> dashboard integration from scratch and tuned EF Core/SQL queries to reduce data loading time by <strong class="text-sage">30%</strong>.
+                            </p>
+                        </div>
+
+                        <!-- Iotasol -->
+                        <div class="relative space-y-2">
+                            <span class="w-2.5 h-2.5 rounded-full bg-stone absolute -left-[29px] top-1.5 ring-4 ring-paper"></span>
+                            <div class="flex flex-wrap items-center justify-between font-mono text-xs text-stoneMuted">
+                                <span class="text-ink">OCT 2022 – APR 2026</span>
+                                <span>Ludhiana, Punjab</span>
+                            </div>
+                            <h3 class="font-serif text-xl text-ink">Software Developer (Full Stack) — Iotasol Technologies Pvt. Ltd.</h3>
+                            <p class="text-xs sm:text-sm text-stone leading-relaxed">
+                                Took ownership of major modules on <strong class="text-ink">SecurityOS (GRC Platform)</strong> and the <strong class="text-ink">AI Medical Report Generator</strong>. Built REST APIs and Angular UI components, connected Boomi, Microsoft Graph (Outlook calendar sync), SecurityScorecard, and Azure AD/Okta SSO, and used Redis caching and AWS SQS to fix production database spikes.
+                            </p>
+                            <div class="p-3 bg-surface border border-borderHairline font-mono text-xs text-ochre flex items-center gap-2.5 mt-2">
+                                <i class="ph-fill ph-medal text-lg shrink-0"></i>
+                                <span>Won <strong>Employee of the Year (2025)</strong> and back-to-back <strong>Employee of the Half-Year Excellence Awards</strong>.</span>
+                            </div>
+                        </div>
+
+                        <!-- Education -->
+                        <div class="relative space-y-1">
+                            <span class="w-2.5 h-2.5 rounded-full bg-borderHairline absolute -left-[29px] top-1.5 ring-4 ring-paper"></span>
+                            <div class="font-mono text-xs text-stoneMuted">GRADUATED 2023 • CGPA 8.3 / 10</div>
+                            <h3 class="font-serif text-lg text-ink">B.Tech, Computer Science &amp; Engineering</h3>
+                            <p class="text-xs text-stone">Dr. A.P.J. Abdul Kalam Technical University (AKTU), Lucknow • <strong class="text-ink">Coding Club Administrator</strong> (Ran 10+ coding workshops and mentored 200+ students).</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right 5 Cols: Direct Contact & Message Box -->
+                <div class="lg:col-span-5" id="contact">
+                    <div class="bg-surface border border-borderHairline p-6 sm:p-7 rounded-sm space-y-5">
+                        <div>
+                            <div class="font-mono text-xs text-terracotta uppercase tracking-widest">Get In Touch</div>
+                            <h3 class="font-serif text-2xl text-ink mt-1">Let’s Connect</h3>
+                            <p class="text-xs text-stone mt-1 leading-relaxed">
+                                Feel free to reach out on LinkedIn, email, or phone—or drop a quick message below.
+                            </p>
+                        </div>
+
+                        <div class="space-y-2 font-mono text-xs">
+                            <a href="https://www.linkedin.com/in/sumit-kumar-892824216/" target="_blank" rel="noopener noreferrer" class="flex items-center justify-between p-3 bg-paper border border-borderHairline hover:border-terracotta text-ink transition-colors">
+                                <span>in/sumit-kumar-892824216</span>
+                                <i class="ph ph-arrow-up-right text-terracotta"></i>
+                            </a>
+                            <div class="flex items-center justify-between p-3 bg-paper border border-borderHairline">
+                                <span class="text-ink">sumitkashyap33820@gmail.com</span>
+                                <button onclick="copyToClipboard('sumitkashyap33820@gmail.com', 'Email')" class="text-terracotta hover:underline">Copy</button>
+                            </div>
+                            <div class="flex items-center justify-between p-3 bg-paper border border-borderHairline">
+                                <span class="text-ink">+91-6387913834</span>
+                                <button onclick="copyToClipboard('+91-6387913834', 'Phone')" class="text-terracotta hover:underline">Copy</button>
+                            </div>
+                        </div>
+
+                        <form onsubmit="handleContactSubmit(event)" class="space-y-3 pt-2 border-t border-borderHairline">
+                            <div>
+                                <label class="block font-mono text-[10px] text-stoneMuted uppercase mb-1">Your Name *</label>
+                                <input type="text" id="contact-name" required placeholder="Alex Rivera" class="w-full px-3 py-2 bg-paper border border-borderHairline text-xs text-ink focus:outline-none focus:border-terracotta">
+                            </div>
+                            <div>
+                                <label class="block font-mono text-[10px] text-stoneMuted uppercase mb-1">Your Email *</label>
+                                <input type="email" id="contact-email" required placeholder="alex@company.com" class="w-full px-3 py-2 bg-paper border border-borderHairline text-xs text-ink focus:outline-none focus:border-terracotta">
+                            </div>
+                            <div>
+                                <label class="block font-mono text-[10px] text-stoneMuted uppercase mb-1">Subject *</label>
+                                <input type="text" id="contact-subject" required placeholder="Full-Stack .NET / Angular Opportunity" class="w-full px-3 py-2 bg-paper border border-borderHairline text-xs text-ink focus:outline-none focus:border-terracotta">
+                            </div>
+                            <div>
+                                <label class="block font-mono text-[10px] text-stoneMuted uppercase mb-1">Message *</label>
+                                <textarea id="contact-message" rows="3" required placeholder="Hi Sumit, I checked out your portfolio and would love to chat..." class="w-full px-3 py-2 bg-paper border border-borderHairline text-xs text-ink focus:outline-none focus:border-terracotta"></textarea>
+                            </div>
+                            <button type="submit" class="w-full py-2.5 bg-terracotta text-paper font-mono text-xs font-semibold hover:bg-terracotta/90 transition-colors">
+                                Send Email →
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="max-w-6xl mx-auto px-4 sm:px-6 py-8 border-x border-t border-borderHairline font-mono text-xs text-stoneMuted flex flex-col sm:flex-row items-center justify-between gap-4 no-print">
+        <div>SUMIT KUMAR // FULL-STACK .NET &amp; ANGULAR PORTFOLIO</div>
+        <div class="flex items-center gap-4">
+            <button onclick="openCommandPalette()" class="hover:text-ink">⌘K Quick Menu</button>
+            <span>•</span>
+            <button onclick="openResumeModal()" class="hover:text-terracotta">Download / Print Resume</button>
+        </div>
+    </footer>
+
+    <!-- ==========================================
+         COMMAND PALETTE MODAL (⌘K / Ctrl+K)
+    =========================================== -->
+    <div id="cmd-palette" class="fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-xs flex items-start justify-center pt-20 p-4 no-print" onclick="if(event.target === this) closeCommandPalette()">
+        <div class="w-full max-w-lg bg-surface border border-borderHairline shadow-2xl overflow-hidden">
+            <div class="p-3 border-b border-borderHairline flex items-center justify-between font-mono text-xs text-stoneMuted">
+                <span>QUICK JUMP MENU</span>
+                <button onclick="closeCommandPalette()" class="px-1.5 py-0.5 bg-paper border border-borderHairline text-[10px]">ESC</button>
+            </div>
+            <div class="divide-y divide-borderHairline font-mono text-xs">
+                <button onclick="jumpTo('#aviation-erp', 'flowA')" class="w-full text-left p-3.5 hover:bg-surfaceHover flex items-center justify-between">
+                    <span class="text-ink">01. Aviation ERP — Flow A (How Power BI Pulls Data)</span>
+                    <span class="text-terracotta">Jump →</span>
+                </button>
+                <button onclick="jumpTo('#aviation-erp', 'flowB')" class="w-full text-left p-3.5 hover:bg-surfaceHover flex items-center justify-between">
+                    <span class="text-ink">02. Aviation ERP — Flow B (Angular Report Embedding)</span>
+                    <span class="text-terracotta">Jump →</span>
+                </button>
+                <button onclick="jumpTo('#aviation-erp', 'gotchas')" class="w-full text-left p-3.5 hover:bg-surfaceHover flex items-center justify-between">
+                    <span class="text-ink">03. Aviation ERP — Real-World Lessons Learned</span>
+                    <span class="text-terracotta">Jump →</span>
+                </button>
+                <button onclick="jumpToRca(1)" class="w-full text-left p-3.5 hover:bg-surfaceHover flex items-center justify-between">
+                    <span class="text-ink">04. RCA #1 — Fixing the Admin N+1 Query &amp; EC2 Reset</span>
+                    <span class="text-crimson">RCA →</span>
+                </button>
+                <button onclick="jumpToRca(2)" class="w-full text-left p-3.5 hover:bg-surfaceHover flex items-center justify-between">
+                    <span class="text-ink">05. RCA #2 — Handling SendGrid Webhooks with AWS SQS</span>
+                    <span class="text-ochre">RCA →</span>
+                </button>
+                <button onclick="closeCommandPalette(); openResumeModal();" class="w-full text-left p-3.5 hover:bg-surfaceHover flex items-center justify-between bg-paper/50">
+                    <span class="text-terracotta font-semibold">06. View / Download Printable Resume</span>
+                    <span class="text-ink">PDF / HTML →</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==========================================
+         PRINTABLE / DOWNLOADABLE ATS RESUME MODAL
+    =========================================== -->
+    <div id="resume-modal" class="fixed inset-0 z-50 hidden bg-black/85 backdrop-blur-xs overflow-y-auto p-4 sm:p-8">
+        <div class="max-w-4xl mx-auto mb-4 flex flex-wrap items-center justify-between gap-3 bg-surface border border-borderHairline p-4 no-print">
+            <div class="font-mono text-xs">
+                <div class="text-ink font-semibold">PRINTABLE RESUME (UPDATED WITH AVIATION ERP &amp; PRODUCTION RCAs)</div>
+                <div class="text-stoneMuted">Click "Print / Save as PDF" or download as an HTML file</div>
+            </div>
+            <div class="flex items-center gap-2 font-mono text-xs">
+                <button onclick="window.print()" class="px-3.5 py-2 bg-terracotta text-paper font-semibold hover:bg-terracotta/90">
+                    Print / Save as PDF
+                </button>
+                <button onclick="downloadStandaloneResume()" class="px-3.5 py-2 bg-paper border border-borderHairline text-ink hover:border-terracotta">
+                    Download (.html)
+                </button>
+                <button onclick="closeResumeModal()" class="px-3 py-2 bg-paper border border-borderHairline text-stone hover:text-ink">
+                    Close ✕
+                </button>
+            </div>
+        </div>
+
+        <div id="printable-resume-container" class="max-w-4xl mx-auto bg-white text-slate-900 p-6 sm:p-10 font-sans shadow-2xl leading-snug">
+            <div class="border-b-2 border-slate-900 pb-3 mb-3">
+                <h1 class="text-2xl font-extrabold uppercase tracking-tight text-slate-900">SUMIT KUMAR</h1>
+                <p class="text-xs font-bold text-slate-700 mt-0.5">
+                    .NET FULL STACK DEVELOPER | ASP.NET CORE | ANGULAR | AZURE / AWS
+                </p>
+                <div class="text-xs text-slate-600 mt-1 flex flex-wrap gap-x-2">
+                    <span>Kanpur, Uttar Pradesh, India</span><span>|</span>
+                    <span>+91-6387913834</span><span>|</span>
+                    <span>sumitkashyap33820@gmail.com</span><span>|</span>
+                    <span>linkedin.com/in/sumit-kumar-892824216</span>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <h2 class="text-xs font-bold uppercase tracking-wider border-b border-slate-300 pb-0.5 mb-1">PROFESSIONAL SUMMARY</h2>
+                <p class="text-xs text-slate-800">
+                    Full Stack .NET Developer with 4 years of experience building and improving enterprise web applications and REST APIs using C#, ASP.NET Core, Entity Framework Core, SQL Server, Amazon Aurora (RDS), and Angular. Hands-on experience with multi-tenant Power BI embedded analytics, production Root Cause Analysis (S3 log analysis, Visual Studio Profiler, CloudWatch RDS monitoring), AWS SQS background queues, and third-party/AI integrations (Boomi, Microsoft Graph, SecurityScorecard, Azure AD/Okta SSO, Microsoft Foundry).
+                </p>
+            </div>
+
+            <div class="mb-3">
+                <h2 class="text-xs font-bold uppercase tracking-wider border-b border-slate-300 pb-0.5 mb-1">TECHNICAL SKILLS</h2>
+                <div class="text-xs text-slate-800 space-y-0.5">
+                    <div><strong>Languages &amp; Web:</strong> C#, Python, TypeScript, JavaScript, SQL, HTML5, CSS3/SCSS</div>
+                    <div><strong>Backend &amp; Architecture:</strong> ASP.NET Core (.NET 5+), ASP.NET MVC, Entity Framework Core, LINQ, SQL Server Stored Procedures (SSDT), Clean Architecture, SOLID, FastAPI</div>
+                    <div><strong>Frontend &amp; Reporting:</strong> Angular, RxJS, NgRx, Reactive Forms, Power BI Embedded (powerbi-client), Bootstrap</div>
+                    <div><strong>Databases &amp; Queues:</strong> SQL Server, MySQL, Amazon Aurora (RDS), Redis, AWS SQS, SQL Query Tuning</div>
+                    <div><strong>Cloud, Security &amp; Integrations:</strong> Microsoft Azure (App Services, Microsoft Foundry, Azure AD), AWS (EC2, S3, SQS, CloudWatch, API Gateway), Okta SSO, OAuth 2.0/JWT, AES-256 Encryption, Boomi, Microsoft Graph API, SecurityScorecard, SendGrid Webhooks</div>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <h2 class="text-xs font-bold uppercase tracking-wider border-b border-slate-300 pb-0.5 mb-1.5">PROFESSIONAL EXPERIENCE</h2>
+                <div class="mb-2.5">
+                    <div class="flex justify-between text-xs font-bold">
+                        <span>SilverXis LLP | Senior Software Engineer (Full Stack)</span>
+                        <span>May 2026 – Oct 2026 | Ahmedabad, Gujarat</span>
+                    </div>
+                    <ul class="list-disc list-inside text-xs text-slate-800 space-y-0.5 mt-0.5">
+                        <li>Owned full-stack feature development on an enterprise Aviation ERP platform across ASP.NET Core APIs, Angular components, and SQL Server (SSDT) data repositories.</li>
+                        <li>Designed and built a multi-tenant Power BI App-Owns-Data integration with two runtime flows: encrypted company tokens for Power BI dataset refreshes and Azure AD Service Principal embedding in Angular.</li>
+                        <li>Optimized Entity Framework Core/LINQ queries and SQL Server stored procedures, cutting data retrieval time by 30%.</li>
+                    </ul>
+                </div>
+                <div>
+                    <div class="flex justify-between text-xs font-bold">
+                        <span>Iotasol Technologies Pvt. Ltd. | Software Developer (Full Stack)</span>
+                        <span>Oct 2022 – Apr 2026 | Ludhiana, Punjab</span>
+                    </div>
+                    <ul class="list-disc list-inside text-xs text-slate-800 space-y-0.5 mt-0.5">
+                        <li>Developed core application modules using ASP.NET Core, Angular, and EF Core following Clean Architecture and SOLID principles.</li>
+                        <li>Investigated and resolved production EC2 server resets by analyzing S3 API logs, reproducing N+1 memory spikes in Visual Studio Profiler, and updating queries to load only required columns.</li>
+                        <li>Monitored Amazon Aurora (RDS) health in AWS CloudWatch; resolved high database CPU spikes during bulk SendGrid email campaigns by queuing webhook events in AWS SQS and processing them with a .NET BackgroundService.</li>
+                        <li>Integrated Boomi (unified compliance data behind AWS API Gateway), Microsoft Graph (Outlook calendar sync), SecurityScorecard bulk domain APIs, and Azure AD / Okta SSO.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <h2 class="text-xs font-bold uppercase tracking-wider border-b border-slate-300 pb-0.5 mb-1">PROJECTS</h2>
+                <div class="space-y-1.5 text-xs text-slate-800">
+                    <div>
+                        <strong>Aviation ERP – Multi-Tenant MRO Analytics &amp; Power BI Integration:</strong> Built isolated per-tenant Power BI workspaces, `dbo.PowerBiReportMapping` schema, raw `HttpClient` Azure AD token generation, encrypted data APIs, and automated template sync (`UpdateReportContent`) for Work Order Turnaround Time (TAT) dashboards.
+                    </div>
+                    <div>
+                        <strong>SecurityOS – Enterprise Governance, Risk &amp; Compliance (GRC) Platform:</strong> Built compliance scoring, employee security training modules, Microsoft Foundry AI risk-to-control prediction, Boomi multi-platform data ingestion, AWS SQS email webhook processing, and Adobe PDF assessment reports.
+                    </div>
+                    <div>
+                        <strong>AI Medical Report Generator:</strong> Built a Python, FastAPI, OCR, and LangChain service that converts patient-consultant conversation transcripts into structured clinical reports, integrated with ASP.NET Core, Angular, and SQL Server.
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-4 text-xs text-slate-800">
+                <div>
+                    <h2 class="font-bold uppercase tracking-wider border-b border-slate-300 pb-0.5 mb-1">AWARDS &amp; RECOGNITION</h2>
+                    <div>• <strong>Employee of the Year (2025)</strong> &amp; consecutive Half-Year Excellence Awards, Iotasol Technologies.</div>
+                    <div>• <strong>Coding Club Administrator:</strong> Led 10+ technical workshops, mentoring 200+ students.</div>
+                </div>
+                <div>
+                    <h2 class="font-bold uppercase tracking-wider border-b border-slate-300 pb-0.5 mb-1">EDUCATION</h2>
+                    <div><strong>B.Tech, Computer Science &amp; Engineering</strong> (2023 | CGPA: 8.3/10)</div>
+                    <div>Dr. A.P.J. Abdul Kalam Technical University, Lucknow</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==========================================
+         INTERACTIVE ARCHITECTURE & TELEMETRY SCRIPTS
+    =========================================== -->
+    <script>
+        // --- 1. AVIATION ERP POWER BI TABS (SIMPLE, CLEAR LANGUAGE, ANONYMIZED) ---
+        const pasTabsContent = {
+            flowA: `
+                <div class="space-y-6">
+                    <div class="flex flex-wrap items-center justify-between gap-2 border-b border-borderHairline pb-4">
+                        <div>
+                            <div class="font-mono text-xs text-terracotta">FLOW A // HOW POWER BI GETS DATA FROM OUR API</div>
+                            <h3 class="font-serif text-2xl text-ink mt-0.5">Using an Encrypted Company Token to Load the Right Database</h3>
+                        </div>
+                        <span class="font-mono text-xs px-2.5 py-1 bg-paper border border-borderHairline text-sage">
+                            Controller: PowerBiApiController.cs
+                        </span>
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+                        <!-- Step-by-Step in Plain English -->
+                        <div class="lg:col-span-6 space-y-3">
+                            <div class="font-mono text-xs text-stoneMuted uppercase">How It Works Step-by-Step</div>
+                            <ol class="space-y-2.5 text-xs text-stone font-sans">
+                                <li class="p-3 bg-paper border border-borderHairline">
+                                    <strong class="font-mono text-ink">1. Power BI Requests Data:</strong> Whenever a dataset refreshes, Power BI calls our API URL and passes an encrypted token in the query string: <code class="font-mono text-terracotta">/api/PowerBiApi/detailed-work-orders?token=...</code>
+                                </li>
+                                <li class="p-3 bg-paper border border-borderHairline">
+                                    <strong class="font-mono text-ink">2. Why It’s [AllowAnonymous]:</strong> Power BI’s background refresh service doesn't have a logged-in user session, so the encrypted token itself acts as the credential.
+                                </li>
+                                <li class="p-3 bg-paper border border-borderHairline">
+                                    <strong class="font-mono text-ink">3. Decrypting the Token (AES-256):</strong> <code class="font-mono text-ink">ReportingTokenService</code> decrypts the token using AES-256-CBC to get <code class="font-mono text-ink">{MasterCompanyId}|{ExpiryTimestamp}</code> and checks that the token hasn't expired.
+                                </li>
+                                <li class="p-3 bg-paper border border-borderHairline">
+                                    <strong class="font-mono text-ink">4. Switching to That Company’s Database:</strong> <code class="font-mono text-sage">_tenantProvider.SetTenant(payload.MasterCompanyId, Request.Path)</code> switches the SQL connection string to match that company.
+                                </li>
+                                <li class="p-3 bg-paper border border-borderHairline">
+                                    <strong class="font-mono text-ink">5. Running the Stored Procedure:</strong> The repository runs <code class="font-mono text-ink">USP_GetPowerBIDetailedWorkOrders</code> and returns clean JSON rows (work order number, part number, airframe station, and status) back to Power BI.
+                                </li>
+                            </ol>
+                        </div>
+
+                        <!-- Actual C# Contract & Simple Security Explanation -->
+                        <div class="lg:col-span-6 space-y-4">
+                            <div class="font-mono text-xs text-stoneMuted uppercase">The 3-Line Controller Pattern We Use on Every Data Endpoint</div>
+                            <pre class="p-4 bg-paper border border-borderHairline font-mono text-[11px] text-ink overflow-x-auto leading-relaxed"><code><span class="text-ochre">[AllowAnonymous]</span>
+<span class="text-ochre">[HttpGet("detailed-work-orders")]</span>
+<span class="text-terracotta">public async</span> Task&lt;IActionResult&gt; GetDetailedWorkOrders([FromQuery] <span class="text-terracotta">string</span> token)
+{
+    <span class="text-terracotta">if</span> (!_reportingTokenService.TryParseToken(token, <span class="text-terracotta">out var</span> payload, <span class="text-terracotta">out var</span> error))
+        <span class="text-terracotta">return</span> Unauthorized(<span class="text-terracotta">new</span> { message = error });
+
+    _tenantProvider.SetTenant(payload.MasterCompanyId, Request.Path);
+
+    <span class="text-terracotta">var</span> reportData = <span class="text-terracotta">await</span> _unitOfWork.PowerBIReportRepository
+        .GetDetailedWorkOrdersAsync(payload.MasterCompanyId);
+    <span class="text-terracotta">return</span> Ok(reportData);
+}</code></pre>
+
+                            <div class="p-4 bg-crimson/10 border border-crimson/40 space-y-1">
+                                <div class="font-mono text-xs text-crimson font-semibold">
+                                    IMPORTANT SECURITY RULE: NEVER PASS COMPANY ID IN THE URL
+                                </div>
+                                <p class="text-xs text-stone leading-relaxed">
+                                    We never accept <code class="font-mono text-ink">masterCompanyId</code> as a normal URL parameter. If we did, anyone could change the number in the URL and see another company’s data. Instead, we always read the company ID from inside the decrypted token.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `,
+            flowB: `
+                <div class="space-y-6">
+                    <div class="flex flex-wrap items-center justify-between gap-2 border-b border-borderHairline pb-4">
+                        <div>
+                            <div class="font-mono text-xs text-terracotta">FLOW B // HOW USERS VIEW REPORTS IN ANGULAR</div>
+                            <h3 class="font-serif text-2xl text-ink mt-0.5">Embedding Dashboards Without Needing a Microsoft Login</h3>
+                        </div>
+                        <span class="font-mono text-xs px-2.5 py-1 bg-paper border border-borderHairline text-ochre">
+                            Controller: PowerBIReportController.cs
+                        </span>
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+                        <div class="lg:col-span-6 space-y-3 text-xs text-stone">
+                            <div class="font-mono text-xs text-stoneMuted uppercase">How a Logged-In User Sees Their Dashboard</div>
+                            <div class="p-3.5 bg-paper border border-borderHairline space-y-1.5">
+                                <div class="font-mono text-ink font-semibold">1. Look Up the Company’s Report</div>
+                                <p>When a user opens a dashboard in Angular, our backend reads their <code class="font-mono text-ink">masterCompanyId</code> from their login claims and looks up their specific Workspace ID and Report ID in the <code class="font-mono text-ink">dbo.PowerBiReportMapping</code> table.</p>
+                            </div>
+                            <div class="p-3.5 bg-paper border border-borderHairline space-y-1.5">
+                                <div class="font-mono text-ink font-semibold">2. Get a View-Only Embed Token via HttpClient</div>
+                                <p>Our backend (<code class="font-mono text-ink">PowerBiService.cs</code>) logs into Azure AD as a Service Principal using standard <code class="font-mono text-ink">HttpClient</code> calls, and asks Power BI for a short-lived, view-only (<code class="font-mono text-sage">accessLevel: "View"</code>) embed token for that report.</p>
+                            </div>
+                            <div class="p-3.5 bg-paper border border-borderHairline space-y-1.5">
+                                <div class="font-mono text-ink font-semibold">3. Render Inside Angular</div>
+                                <p>Angular receives the embed URL and token, and uses the official <code class="font-mono text-terracotta">powerbi-client</code> JavaScript library to mount the interactive dashboard iframe on the page.</p>
+                            </div>
+                        </div>
+
+                        <!-- Simulated Work Order TAT Embedded Dashboard & DevTools Payload -->
+                        <div class="lg:col-span-6 space-y-3">
+                            <div class="font-mono text-xs text-stoneMuted uppercase">Dashboard Preview: Work Order Turnaround Time (TAT)</div>
+                            <div class="bg-paper border border-borderHairline p-4 space-y-4">
+                                <div class="flex items-center justify-between border-b border-borderHairline pb-2">
+                                    <div>
+                                        <span class="font-mono text-[10px] text-terracotta uppercase">Aviation ERP • MRO Fleet Analytics</span>
+                                        <h4 class="font-sans text-sm font-semibold text-ink">Work Order Turnaround Time (TAT)</h4>
+                                    </div>
+                                    <span class="font-mono text-[10px] px-2 py-0.5 bg-surface border border-borderHairline text-sage">200 OK • Live Embed</span>
+                                </div>
+
+                                <!-- KPI Cards -->
+                                <div class="grid grid-cols-3 gap-2.5 font-mono">
+                                    <div class="p-2.5 bg-surface border border-borderHairline">
+                                        <div class="text-[10px] text-stoneMuted">AVG TAT</div>
+                                        <div class="text-sm font-bold text-ink">460.0d</div>
+                                        <div class="text-[10px] text-crimson">▲ vs target</div>
+                                    </div>
+                                    <div class="p-2.5 bg-surface border border-borderHairline">
+                                        <div class="text-[10px] text-stoneMuted">VARIANCE VS QUOTED</div>
+                                        <div class="text-sm font-bold text-ink">56.5</div>
+                                        <div class="text-[10px] text-ochre">14% over quote</div>
+                                    </div>
+                                    <div class="p-2.5 bg-surface border border-borderHairline">
+                                        <div class="text-[10px] text-stoneMuted">OPEN WORK ORDERS</div>
+                                        <div class="text-sm font-bold text-ink">2K</div>
+                                        <div class="text-[10px] text-stone">By Aging Group</div>
+                                    </div>
+                                </div>
+
+                                <!-- Actual embed-config JSON response preview -->
+                                <div class="font-mono text-[11px] bg-surface p-3 border border-borderHairline text-stone overflow-x-auto">
+                                    <div class="text-stoneMuted mb-1">// GET /api/PowerBIReport/WorkOrderTAT/embed-config</div>
+                                    <div>{</div>
+                                    <div class="pl-3"><span class="text-terracotta">"reportId"</span>: <span class="text-sage">"60f7d6ed-373e-4dc0-905c-e8420d6cb98a"</span>,</div>
+                                    <div class="pl-3"><span class="text-terracotta">"reportName"</span>: <span class="text-sage">"Work Order TAT Report"</span>,</div>
+                                    <div class="pl-3"><span class="text-terracotta">"embedToken"</span>: <span class="text-ochre">"H4sIAAAAAAAEAB2TTa70ZgBE3-W2jmRYY6S..."</span>,</div>
+                                    <div class="pl-3"><span class="text-terracotta">"tenantId"</span>: <span class="text-sage">"1"</span>, <span class="text-terracotta">"tokenExpiry"</span>: <span class="text-sage">"2026-09-18T11:29:13Z"</span></div>
+                                    <div>}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `,
+            isolation: `
+                <div class="space-y-6">
+                    <div class="border-b border-borderHairline pb-4">
+                        <div class="font-mono text-xs text-terracotta">SEPARATE WORKSPACES &amp; ONE-CLICK REPORT UPDATES</div>
+                        <h3 class="font-serif text-2xl text-ink mt-0.5">Keeping Each Company’s Data 100% Separate While Making Updates Easy</h3>
+                    </div>
+
+                    <p class="text-stone text-xs sm:text-sm leading-relaxed">
+                        To make sure one aviation company can never see another company's data, we gave each company its own separate <strong class="text-ink">Power BI Workspace, Report copy, and Dataset</strong>. Here is how we set up new companies and push design updates without redoing work by hand:
+                    </p>
+
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-3 font-mono text-xs">
+                        <div class="p-4 bg-paper border border-borderHairline space-y-1.5">
+                            <div class="text-terracotta">STEP 1</div>
+                            <div class="text-ink font-semibold">Build One Master Report</div>
+                            <p class="text-stone font-sans text-xs">We design the charts and DAX formulas once in a private Master Workspace (<code class="text-ink">IsMaster = 1</code>) that customers never see.</p>
+                        </div>
+                        <div class="p-4 bg-paper border border-borderHairline space-y-1.5">
+                            <div class="text-terracotta">STEP 2</div>
+                            <div class="text-ink font-semibold">Clone for Each Company</div>
+                            <p class="text-stone font-sans text-xs">When a company signs up, we clone the master report into their own workspace and set their encrypted API token.</p>
+                        </div>
+                        <div class="p-4 bg-paper border border-borderHairline space-y-1.5">
+                            <div class="text-terracotta">STEP 3</div>
+                            <div class="text-ink font-semibold">Save in Mapping Table</div>
+                            <p class="text-stone font-sans text-xs">We save the company’s <code class="text-ink">WorkspaceId</code>, <code class="text-ink">ReportId</code>, and <code class="text-ink">ReportKey</code> in <code class="text-ink">dbo.PowerBiReportMapping</code>.</p>
+                        </div>
+                        <div class="p-4 bg-paper border border-borderHairline space-y-1.5">
+                            <div class="text-terracotta">STEP 4</div>
+                            <div class="text-ink font-semibold">Push Visual Updates</div>
+                            <p class="text-stone font-sans text-xs">When we update a chart on the Master Report, our backend calls <code class="text-ink">UpdateReportContent</code> to copy the new visuals to every company’s report automatically.</p>
+                        </div>
+                    </div>
+                </div>
+            `,
+            gotchas: `
+                <div class="space-y-5">
+                    <div class="border-b border-borderHairline pb-4">
+                        <div class="font-mono text-xs text-terracotta">REAL-WORLD LESSONS LEARNED</div>
+                        <h3 class="font-serif text-2xl text-ink mt-0.5">Important Details I Documented for Our Engineering Team</h3>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+                        <div class="p-4 bg-paper border border-borderHairline space-y-1.5">
+                            <div class="font-mono text-ink font-semibold">1. Why We Used Plain HttpClient Instead of Extra SDKs</div>
+                            <p class="text-stone leading-relaxed">
+                                Instead of adding heavy NuGet packages like <code class="font-mono text-ink">Microsoft.PowerBI.Api</code> or <code class="font-mono text-ink">MSAL</code>, we wrote clean, direct <code class="font-mono text-terracotta">HttpClient</code> calls for the 3 REST endpoints we actually needed. It kept the backend lightweight and easy to debug.
+                            </p>
+                        </div>
+                        <div class="p-4 bg-paper border border-borderHairline space-y-1.5">
+                            <div class="font-mono text-ink font-semibold">2. Two Controllers with Different Jobs (and Spelling)</div>
+                            <p class="text-stone leading-relaxed">
+                                <code class="font-mono text-terracotta">PowerBiApiController</code> sends data <em>out</em> to Power BI, while <code class="font-mono text-terracotta">PowerBIReportController</code> sends embed tokens <em>in</em> to Angular. Because live reports depend on those exact URLs, we documented the spelling difference clearly so nobody accidentally breaks a route.
+                            </p>
+                        </div>
+                        <div class="p-4 bg-paper border border-borderHairline space-y-1.5">
+                            <div class="font-mono text-ink font-semibold">3. Managing Database Changes in SQL SSDT</div>
+                            <p class="text-stone leading-relaxed">
+                                Our database schema (<code class="font-mono text-ink">ERP_DB</code>) is managed through a SQL Server SSDT project rather than EF Core migrations—so whenever we add a column in C#, we also publish it in the SSDT project.
+                            </p>
+                        </div>
+                        <div class="p-4 bg-paper border border-borderHairline space-y-1.5">
+                            <div class="font-mono text-ink font-semibold">4. Backend Embed Token Controls Permissions</div>
+                            <p class="text-stone leading-relaxed">
+                                Even if the frontend JavaScript SDK passes <code class="font-mono text-ink">Permissions.All</code>, the backend mints the embed token with <code class="font-mono text-sage">accessLevel: "View"</code>. The backend token always wins, keeping customer reports safely read-only.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            `
+        };
+
+        function switchPasTab(tabKey) {
+            ['flowA', 'flowB', 'isolation', 'gotchas'].forEach(k => {
+                const btn = document.getElementById('pas-tab-' + k);
+                if (k === tabKey) {
+                    btn.className = "px-3.5 py-2 rounded bg-terracotta text-paper font-semibold transition-colors";
+                } else {
+                    btn.className = "px-3.5 py-2 rounded bg-surface border border-borderHairline text-stone hover:text-ink transition-colors";
+                }
+            });
+            document.getElementById('pas-viewport').innerHTML = pasTabsContent[tabKey];
+        }
+
+        // --- 2. PRODUCTION FIREFIGHTING (RCA) & CLOUDWATCH SIMULATOR (SIMPLE LANGUAGE) ---
+        let activeRca = 1;
+        let activeRcaMode = 'before';
+
+        const rcaStore = {
+            1: {
+                tag: "INCIDENT #01 // AWS EC2 & S3 LOG INVESTIGATION",
+                title: "Admin N+1 Query Spike vs. Loading Only Required Columns",
+                beforeMetrics: { cpu: "99.4% (Crash)", mem: "Out of Memory", lat: "EC2 Server Reset" },
+                afterMetrics:  { cpu: "21.8% (Normal)", mem: "36% Stable RAM", lat: "310ms Fast Response" },
+                beforeSeries:  [19, 21, 20, 24, 89, 99, 100, 99, 100, 99, 100, 100],
+                afterSeries:   [19, 21, 20, 22, 27, 24, 22, 21, 20, 19, 20, 19],
+                narrative: `
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div class="p-3.5 bg-paper border border-borderHairline space-y-1">
+                            <div class="font-mono text-[11px] text-crimson font-semibold">1. WHAT HAPPENED</div>
+                            <p class="text-stone text-xs leading-relaxed">
+                                An API triggered by an admin user had an <strong class="text-ink">N+1 query problem</strong> that pulled way too much data into memory. Whenever the admin ran that action, the <strong class="text-ink">EC2 instance ran out of memory and reset itself</strong>.
+                            </p>
+                        </div>
+                        <div class="p-3.5 bg-paper border border-borderHairline space-y-1">
+                            <div class="font-mono text-[11px] text-ochre font-semibold">2. HOW I FOUND THE CAUSE</div>
+                            <p class="text-stone text-xs leading-relaxed">
+                                I checked all the <strong class="text-ink">API logs stored in our AWS S3 bucket</strong> around the time of the crash to see which API was running. Even though my local machine had different specs than production, I used the <strong class="text-ink">Visual Studio Profiler</strong> locally to spot the exact memory spike.
+                            </p>
+                        </div>
+                        <div class="p-3.5 bg-paper border border-borderHairline space-y-1">
+                            <div class="font-mono text-[11px] text-sage font-semibold">3. HOW WE FIXED IT</div>
+                            <p class="text-stone text-xs leading-relaxed">
+                                I explained the full issue to the client and confirmed the action wasn't blocking urgent daily work. We reproduced it on the Dev server, changed the query to <strong class="text-ink">eager-load only the specific columns needed (<code class="font-mono">.Select()</code>)</strong> with light in-memory processing, and deployed the fix safely to production.
+                            </p>
+                        </div>
+                    </div>
+                `
+            },
+            2: {
+                tag: "INCIDENT #02 // AMAZON AURORA (RDS) & SENDGRID WEBHOOKS",
+                title: "Thousands of SendGrid Email Callbacks vs. AWS SQS Queueing",
+                beforeMetrics: { cpu: "96.8% RDS CPU", mem: "DB Connections Full", lat: "Webhook Timeouts" },
+                afterMetrics:  { cpu: "26.4% Smooth", mem: "Queued in SQS", lat: "16ms Instant ACK" },
+                beforeSeries:  [22, 25, 93, 97, 95, 98, 94, 96, 92, 90, 95, 94],
+                afterSeries:   [22, 24, 28, 30, 29, 27, 28, 26, 27, 25, 24, 23],
+                narrative: `
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div class="p-3.5 bg-paper border border-borderHairline space-y-1">
+                            <div class="font-mono text-[11px] text-crimson font-semibold">1. WHAT HAPPENED</div>
+                            <p class="text-stone text-xs leading-relaxed">
+                                Our app sent thousands of emails at once using <strong class="text-ink">SendGrid</strong>. Right after, SendGrid called our webhook API thousands of times within a few seconds to report <code class="font-mono text-ink">delivered</code> and <code class="font-mono text-ink">opened</code> events—causing a huge CPU and memory spike on our <strong class="text-ink">Aurora RDS database</strong>.
+                            </p>
+                        </div>
+                        <div class="p-3.5 bg-paper border border-borderHairline space-y-1">
+                            <div class="font-mono text-[11px] text-ochre font-semibold">2. PUSHING EVENTS TO AWS SQS</div>
+                            <p class="text-stone text-xs leading-relaxed">
+                                Instead of updating the database directly inside the webhook request, I updated the webhook API to quickly push every incoming SendGrid event straight into an <strong class="text-ink">AWS SQS queue</strong>.
+                            </p>
+                        </div>
+                        <div class="p-3.5 bg-paper border border-borderHairline space-y-1">
+                            <div class="font-mono text-[11px] text-sage font-semibold">3. PROCESSING ONE BY ONE</div>
+                            <p class="text-stone text-xs leading-relaxed">
+                                I built a <strong class="text-ink">.NET BackgroundService</strong> that pulls messages from the SQS queue and processes them one by one at a steady pace—completely stopping the RDS database spikes in CloudWatch.
+                            </p>
+                        </div>
+                    </div>
+                `
+            }
+        };
+
+        function selectRca(id) {
+            activeRca = id;
+            const c1 = document.getElementById('rca-card-1');
+            const c2 = document.getElementById('rca-card-2');
+            if (id === 1) {
+                c1.className = "w-full text-left p-5 rounded-sm bg-surface border-2 border-terracotta transition-all space-y-2";
+                c2.className = "w-full text-left p-5 rounded-sm bg-paper border border-borderHairline hover:bg-surface transition-all space-y-2";
+            } else {
+                c2.className = "w-full text-left p-5 rounded-sm bg-surface border-2 border-terracotta transition-all space-y-2";
+                c1.className = "w-full text-left p-5 rounded-sm bg-paper border border-borderHairline hover:bg-surface transition-all space-y-2";
+            }
+            renderRcaTelemetry();
+        }
+
+        function setRcaMode(mode) {
+            activeRcaMode = mode;
+            const bBefore = document.getElementById('btn-mode-before');
+            const bAfter = document.getElementById('btn-mode-after');
+            if (mode === 'before') {
+                bBefore.className = "px-3 py-1 rounded-sm bg-crimson/20 text-crimson border border-crimson/40 font-medium transition-colors";
+                bAfter.className = "px-3 py-1 rounded-sm text-stone hover:text-ink transition-colors";
+            } else {
+                bAfter.className = "px-3 py-1 rounded-sm bg-sage/20 text-sage border border-sage/40 font-medium transition-colors";
+                bBefore.className = "px-3 py-1 rounded-sm text-stone hover:text-ink transition-colors";
+            }
+            renderRcaTelemetry();
+        }
+
+        function renderRcaTelemetry() {
+            const item = rcaStore[activeRca];
+            document.getElementById('rca-header-tag').textContent = item.tag;
+            document.getElementById('rca-header-title').textContent = item.title;
+            document.getElementById('rca-narrative-box').innerHTML = item.narrative;
+
+            const m = activeRcaMode === 'before' ? item.beforeMetrics : item.afterMetrics;
+            const cpuEl = document.getElementById('rca-metric-cpu');
+            const memEl = document.getElementById('rca-metric-mem');
+            const latEl = document.getElementById('rca-metric-lat');
+
+            cpuEl.textContent = m.cpu;
+            memEl.textContent = m.mem;
+            latEl.textContent = m.lat;
+
+            const colorClass = activeRcaMode === 'before' ? 'text-crimson' : 'text-sage';
+            cpuEl.className = `text-base sm:text-xl font-semibold ${colorClass} mt-0.5`;
+            memEl.className = `text-base sm:text-xl font-semibold ${colorClass} mt-0.5`;
+            latEl.className = `text-base sm:text-xl font-semibold ${activeRcaMode === 'before' ? 'text-ochre' : 'text-ink'} mt-0.5`;
+
+            drawTelemetryCanvas();
+        }
+
+        function drawTelemetryCanvas() {
+            const canvas = document.getElementById('telemetryCanvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            const rect = canvas.parentElement.getBoundingClientRect();
+            canvas.width = rect.width - 24;
+            canvas.height = rect.height - 24;
+
+            const w = canvas.width;
+            const h = canvas.height;
+            ctx.clearRect(0, 0, w, h);
+
+            // Hairline grid
+            ctx.strokeStyle = '#262522';
+            ctx.lineWidth = 1;
+            for (let i = 0; i <= 4; i++) {
+                const y = (h / 4) * i;
+                ctx.beginPath();
+                ctx.moveTo(30, y);
+                ctx.lineTo(w, y);
+                ctx.stroke();
+
+                ctx.fillStyle = '#6e6a61';
+                ctx.font = '10px "JetBrains Mono"';
+                ctx.fillText((100 - i * 25) + '%', 0, y + 10);
+            }
+
+            const series = activeRcaMode === 'before'
+                ? rcaStore[activeRca].beforeSeries
+                : rcaStore[activeRca].afterSeries;
+
+            const plotW = w - 38;
+            const stepX = plotW / (series.length - 1);
+            const strokeColor = activeRcaMode === 'before' ? '#c94a4a' : '#5b8c5a';
+
+            ctx.beginPath();
+            series.forEach((val, i) => {
+                const x = 34 + i * stepX;
+                const y = h - (val / 100) * (h - 16) - 8;
+                if (i === 0) ctx.moveTo(x, y);
+                else ctx.lineTo(x, y);
+            });
+            ctx.strokeStyle = strokeColor;
+            ctx.lineWidth = 2.2;
+            ctx.stroke();
+
+            series.forEach((val, i) => {
+                const x = 34 + i * stepX;
+                const y = h - (val / 100) * (h - 16) - 8;
+                ctx.beginPath();
+                ctx.arc(x, y, 3, 0, Math.PI * 2);
+                ctx.fillStyle = strokeColor;
+                ctx.fill();
+            });
+        }
+
+        // --- 3. ENTERPRISE INTEGRATIONS SWITCHER (SIMPLE LANGUAGE) ---
+        const intBlueprints = {
+            boomi: `
+                <div class="space-y-5">
+                    <div class="flex flex-wrap items-center justify-between gap-2">
+                        <div>
+                            <div class="font-mono text-xs text-terracotta">UNIFIED COMPLIANCE DATA</div>
+                            <h3 class="font-serif text-2xl text-ink">Connecting Multiple Platforms Through Boomi &amp; AWS API Gateway</h3>
+                        </div>
+                        <span class="font-mono text-xs px-2.5 py-1 bg-paper border border-borderHairline text-sage">Secure AWS Proxy Pattern</span>
+                    </div>
+                    <p class="text-stone text-xs sm:text-sm leading-relaxed">
+                        In our GRC app, users needed to manage and audit their compliance data in one place instead of jumping between different tools like <strong class="text-ink">Microsoft Defender, ClickUp, and other platforms</strong>. We used <strong class="text-ink">Boomi</strong> to bring data from all those tools into one standard format. For extra security, our app never called Boomi endpoints directly—instead, our backend called a secure <strong class="text-ink">AWS API endpoint</strong> that talked to Boomi behind the scenes.
+                    </p>
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-3 font-mono text-xs">
+                        <div class="p-3.5 bg-paper border border-borderHairline">
+                            <div class="text-stoneMuted text-[10px]">01. USER TOOLS</div>
+                            <div class="text-ink font-semibold mt-0.5">MS Defender &amp; ClickUp</div>
+                            <div class="text-stone font-sans text-xs mt-1">Users connect their existing business tools to Boomi.</div>
+                        </div>
+                        <div class="p-3.5 bg-paper border border-borderHairline">
+                            <div class="text-terracotta text-[10px]">02. ONE DATA FORMAT</div>
+                            <div class="text-ink font-semibold mt-0.5">Boomi Platform</div>
+                            <div class="text-stone font-sans text-xs mt-1">Converts data from different tools into one clean format.</div>
+                        </div>
+                        <div class="p-3.5 bg-paper border border-borderHairline">
+                            <div class="text-sage text-[10px]">03. SECURITY LAYER</div>
+                            <div class="text-ink font-semibold mt-0.5">AWS API Endpoint</div>
+                            <div class="text-stone font-sans text-xs mt-1">Hides raw Boomi URLs and keeps API traffic secure.</div>
+                        </div>
+                        <div class="p-3.5 bg-paper border border-borderHairline">
+                            <div class="text-ochre text-[10px]">04. SINGLE DASHBOARD</div>
+                            <div class="text-ink font-semibold mt-0.5">SecurityOS App</div>
+                            <div class="text-stone font-sans text-xs mt-1">Users review and audit all compliance data in one place.</div>
+                        </div>
+                    </div>
+                </div>
+            `,
+            graph: `
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="p-5 bg-paper border border-borderHairline space-y-2">
+                        <div class="font-mono text-xs text-terracotta">MICROSOFT GRAPH API</div>
+                        <h3 class="font-serif text-xl text-ink">Syncing App Events to Users’ Outlook Calendars</h3>
+                        <p class="text-stone text-xs sm:text-sm leading-relaxed">
+                            I integrated the <strong class="text-ink">Microsoft Graph API</strong> so that scheduled compliance events, tasks, and reminders created inside our web app automatically sync directly to each user's <strong class="text-ink">Microsoft Outlook calendar</strong>.
+                        </p>
+                    </div>
+                    <div class="p-5 bg-paper border border-borderHairline space-y-2">
+                        <div class="font-mono text-xs text-ochre">SECURITYSCORECARD API</div>
+                        <h3 class="font-serif text-xl text-ink">Fetching &amp; Processing Multi-Domain Security Data in Bulk</h3>
+                        <p class="text-stone text-xs sm:text-sm leading-relaxed">
+                            I integrated <strong class="text-ink">SecurityScorecard APIs</strong> to pull security ratings and risk data for multiple domains in bulk, and wrote the backend logic to process and calculate scores at the application level.
+                        </p>
+                    </div>
+                </div>
+            `,
+            sso: `
+                <div class="p-5 bg-paper border border-borderHairline space-y-3">
+                    <div class="font-mono text-xs text-sage">SINGLE SIGN-ON (SSO) &amp; USER SYNC</div>
+                    <h3 class="font-serif text-xl text-ink">Azure Active Directory &amp; Okta SSO Integration</h3>
+                    <p class="text-stone text-xs sm:text-sm leading-relaxed">
+                        I implemented <strong class="text-ink">JWT / OAuth 2.0 authentication, Single Sign-On (SSO) with Azure AD and Okta, and Role-Based Access Control (RBAC)</strong>—along with syncing organization users directly from Azure AD into our application.
+                    </p>
+                </div>
+            `
+        };
+
+        function switchIntBlueprint(key) {
+            ['boomi', 'graph', 'sso'].forEach(k => {
+                const btn = document.getElementById('int-btn-' + k);
+                if (k === key) {
+                    btn.className = "px-3 py-1.5 rounded bg-terracotta text-paper font-semibold";
+                } else {
+                    btn.className = "px-3 py-1.5 rounded bg-surface border border-borderHairline text-stone hover:text-ink";
+                }
+            });
+            document.getElementById('int-blueprint-body').innerHTML = intBlueprints[key];
+        }
+
+        // --- 4. COMMAND PALETTE, CLIPBOARD & RESUME UTILITIES ---
+        function openCommandPalette() {
+            document.getElementById('cmd-palette').classList.remove('hidden');
+        }
+        function closeCommandPalette() {
+            document.getElementById('cmd-palette').classList.add('hidden');
+        }
+        function jumpTo(selector, tabKey) {
+            closeCommandPalette();
+            if (tabKey) switchPasTab(tabKey);
+            document.querySelector(selector).scrollIntoView({ behavior: 'smooth' });
+        }
+        function jumpToRca(id) {
+            closeCommandPalette();
+            selectRca(id);
+            document.getElementById('rca-war-room').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        window.addEventListener('keydown', (e) => {
+            if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+                e.preventDefault();
+                const palette = document.getElementById('cmd-palette');
+                palette.classList.toggle('hidden');
+            } else if (e.key === 'Escape') {
+                closeCommandPalette();
+                closeResumeModal();
+            }
+        });
+
+        function showToast(msg) {
+            const container = document.getElementById('toast-container');
+            const el = document.createElement('div');
+            el.className = "px-4 py-2.5 bg-surface border border-terracotta text-ink font-mono text-xs shadow-xl pointer-events-auto";
+            el.textContent = msg;
+            container.appendChild(el);
+            setTimeout(() => el.remove(), 2800);
+        }
+
+        function copyToClipboard(text, label) {
+            const t = document.createElement('textarea');
+            t.value = text;
+            document.body.appendChild(t);
+            t.select();
+            document.execCommand('copy');
+            document.body.removeChild(t);
+            showToast(`${label} copied: ${text}`);
+        }
+
+        function openResumeModal() {
+            document.getElementById('resume-modal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+        function closeResumeModal() {
+            document.getElementById('resume-modal').classList.add('hidden');
+            document.body.style.overflow = '';
+        }
+
+        function downloadStandaloneResume() {
+            const content = document.getElementById('printable-resume-container').innerHTML;
+            const html = `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Sumit_Kumar_Resume</title><script src="https://cdn.tailwindcss.com"><\/script></head><body class="bg-white text-slate-900 p-8 max-w-4xl mx-auto font-sans">${content}</body></html>`;
+            const blob = new Blob([html], { type: 'text/html' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'Sumit_Kumar_Full_Stack_DotNet_Resume.html';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            showToast('Standalone Resume (.html) downloaded');
+        }
+
+        function handleContactSubmit(e) {
+            e.preventDefault();
+            const name = document.getElementById('contact-name').value.trim();
+            const email = document.getElementById('contact-email').value.trim();
+            const subject = document.getElementById('contact-subject').value.trim();
+            const message = document.getElementById('contact-message').value.trim();
+            window.location.href = `mailto:sumitkashyap33820@gmail.com?subject=${encodeURIComponent(subject + ' — ' + name)}&body=${encodeURIComponent(message + '\n\nFrom: ' + name + ' (' + email + ')')}`;
+            showToast('Opening mail client...');
+            e.target.reset();
+        }
+
+        window.onload = function () {
+            switchPasTab('flowA');
+            renderRcaTelemetry();
+            switchIntBlueprint('boomi');
+            window.addEventListener('resize', drawTelemetryCanvas);
+        };
+    </script>
+</body>
+</html>
